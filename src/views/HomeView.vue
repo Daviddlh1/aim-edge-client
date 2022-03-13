@@ -1,20 +1,17 @@
 <template>
   <div>
-    <NavBar/>
-    <hello-world />
-
+    <Table/>
   </div>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
-  import NavBar from "@/components/NavBar"
+import {getAllInvoices} from "@/services/invoicesServices";
+import Table from "@/components/Table.vue"
 
   export default {
     name: 'Home',
-
     components: {
-      HelloWorld,
+      Table
     },
   }
 </script>
