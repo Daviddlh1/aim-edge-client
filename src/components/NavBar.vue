@@ -23,11 +23,20 @@ export default {
   }
 
   .logo {
-    width: 10rem;
+    width: 100%;
   }
   
   .menu {
     height: 100%;
     margin: auto 0;
   }
+  
+@media(min-width: 600px){
+  .nav-bar {
+    justify-content: flex-start;
+  }
+
+
+
+}
 </style>

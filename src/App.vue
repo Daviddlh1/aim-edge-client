@@ -1,7 +1,9 @@
 <template>
 <div>
   <v-app>
-    <NavBar/>
+    <router-link to="/">
+      <NavBar/>
+    </router-link>
     <v-main class="indigo lighten-5">
       <router-view/>
     </v-main>
