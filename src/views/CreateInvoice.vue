@@ -4,7 +4,6 @@
     <v-form
     class="form"
     ref="form"
-    v-model="valid"
     lazy-validation
     >
     <v-select 
@@ -52,9 +51,8 @@
     v => /^\d+$/.test(v) || 'this field must be a number',
     ]"
     ></v-text-field>
-    <router-link class="link" to="/">
-        <v-btn class="indigo darken-1 white--text"   @click="saveInvoice">Create Invoice</v-btn>
-    </router-link>
+    <v-btn :disabled="!valid" class="indigo create-btn btn darken-1 white--text"   @click="saveInvoice">Create Invoice</v-btn>
+    <v-btn color="warning btn" @click="validate">Validate</v-btn>
     </v-form>
     </v-container>
 </template>
@@ -70,7 +68,7 @@ export default {
     data() {
         return {
             dateOption: { year: "numeric", month: "short", day:"numeric"},
-            valid: true,
+            valid: false,
             clients:[],
             discount: 0,
             select: null,
@@ -107,7 +105,19 @@ export default {
             this.currentProducts = this.currentProducts.filter(product => product.id !== id);
         },
 
+        validate() {
+            if(this.$refs.form.validate() && this.currentProducts.length <= 10){
+                this.valid = true
+                console.log("valid es true")
+            }
+            this.valid = this.$refs.form.validate();
+            console.log(this.$refs.form.validate())
+        },
+
         saveInvoice(){
+            if(this.valid){
+                console.log('entré')
+            }
             this.finishedInvoice.invoiceProducts = this.currentProducts.map(product => {
                 this.subTotal = this.subTotal + (product.productPrice * product.productQty);
                 return product
@@ -119,6 +129,8 @@ export default {
             this.finishedInvoice.discount = this.discount;
             console.log(this.finishedInvoice)
             createInvoice(this.finishedInvoice);
+            this.$refs.form.reset()
+            this.valid = false
         },
 
         /* submitHandler(e) {
@@ -154,6 +166,14 @@ export default {
     .add-btn:hover {
         background-color:#4caf50;
         color: white;
+    }
+
+    .create-btn {
+        margin-right: 10px;
+    }
+
+    .btn {
+        margin-top: 10px;
     }
 
     .link {
