@@ -179,4 +179,10 @@ export default {
     .link {
         text-decoration: none;
     }
+
+    @media(min-width: 600px) {
+        .form {
+            min-width: 400px;
+        }
+    }
 </style>
