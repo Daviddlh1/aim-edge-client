@@ -1,12 +1,7 @@
 <template>
-    <v-container class="container ">
-        <div>
-            <router-link to="/create-invoice" class="link">
-                <v-btn class=" buttons indigo darken-1 white--text" tile elevation="2">+ New Invoice</v-btn>
-            </router-link>
-
-        </div>
+    <div class="container">
         <v-expansion-panels focusable>
+            <h1>{{invoices[0].client.name}}</h1>
             <v-expansion-panel v-for="invoice in invoices" :key="invoice.id">
                 <v-expansion-panel-header class="text-h5 title">invoice ID: {{ invoice.id }}</v-expansion-panel-header>
                 <v-expansion-panel-content class="accordion-content">
@@ -23,28 +18,28 @@
                 </v-expansion-panel-content>
             </v-expansion-panel>
         </v-expansion-panels>
-    </v-container>
+    </div>
 </template>
 
 <script>
-import {getAllInvoices} from "@/services/invoicesServices";
+import Table from "@/components/Table.vue";
+import { getClientsInvoices } from "@/services/clientsServices"
 
 export default {
-    name: 'Table',
+    name: "ClientHistory",
     data() {
-      return {
-        invoices: [],
-        update: false,
-      }
+        return{
+            id: this.$route.params.id,
+            invoices:[],
+        }
     },
-    async created() {
-      const response =  await getAllInvoices();
-      this.invoices = response;
-      this.update=!this.update
+    async created(){
+        this.invoices = await getClientsInvoices(this.id);
     },
-    updated(){
-        this.update=!this.update
+    components:{
+        Table,
     }
+
 }
 </script>
 
@@ -56,16 +51,16 @@ export default {
     .buttons {
         border-radius: 5px;
     }
-    
-    .buttons:hover {
-        box-shadow: 0 0 5px black;
-    }
 
     .container {
         display: flex;
         flex-direction: column;
         gap: 1rem;
         padding: 10px;
+    }
+
+    .container h1 {
+        color: #1A237E;
     }
 
     .title {
@@ -75,5 +70,4 @@ export default {
     .accordion-content span {
         font-weight: bold;
     }
-
 </style>

@@ -27,3 +27,14 @@ export const createInvoice = async (invoiceData) => {
     console.log("Error in createInvoice:", err);
   }
 };
+
+export const getClientsAllInvoices = async (id) => {
+  try {
+    const response = (
+      await axios.get(`http://localhost:3001/invoice/cloient/${id}`)
+    ).data;
+    return response;
+  } catch (err) {
+    console.log("Error in getClientsAllInvoices", err);
+  }
+};
