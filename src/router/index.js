@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import InvoiceDetail from "@/views/InvoiceDetail";
 import CreateInvoice from "@/views/CreateInvoice";
+import ClientHistory from "@/views/ClientHistory";
 import Error from "@/views/Error";
 
 Vue.use(VueRouter);
@@ -22,6 +23,11 @@ const routes = [
     path: "/create-invoice",
     name: "createInvoice",
     component: CreateInvoice,
+  },
+  {
+    path: "/client/clientDetails/:id",
+    name: "clientHistory",
+    component: ClientHistory,
   },
   {
     path: "*",
